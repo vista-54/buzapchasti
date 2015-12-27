@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/css.css"/>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+        <script src="js/index.js"></script>
+        <script src="js/jq/jquery.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="head">
+                <i id="f" class="hc fa fa-bars"></i> <span class="title" >НОВЫЙ ЗАПРОС</span><span class="sign-out"><i id="s"  class="hc fa fa-sign-out"></i></span>
+            </div>
+        </header>
+        <div class="subheader">
+            <span>ПАРАМЕТРЫ ЛЕГКОВОГО АВТО</span>
+        </div>
+        <form class="inputForm">
+            <ul>
+                <li><input class="input" id="year" name="year" placeholder="Год выпуска"></li>
+                <li><input class="input" id="marka" name="marka" placeholder="Марка авто"></li>
+                <li><input class="input" id="model" name="model" placeholder="Модель"></li>
+            </ul>
+        </form>
+    <center> <button  class="btnZ" id="dop_polebutton" onclick="DopPoleActivation()">Знаете больше о машине?</button>
+      
+    </center>
+      <center> <img class="arrow" src="img/arrowdown.png"></center>
+      <form id="dop_pole" class="inputForm">
+        <ul>
+            <li><input class="input" id="Vdvc" name="Vdvc" placeholder="Объем ДВС"></li>
+            <li><input class="input" id="Tdvc" name="Tdvc" placeholder="Тип ДВС"></li>
+            <li><input class="input" id="power" name="power" placeholder="Мощность(ЛС)"></li>
+            <li><input class="input" id="privod" name="pridvo" placeholder="Привод"></li>
+            <li><input class="input" id="kuzov" name="kuzov" placeholder="Кузов"></li>
+            <li><input class="input" id="kpp" name="kpp" placeholder="КПП"></li>
+            <li><input class="input" id="kod_kuzov" name="kod_kuzov" placeholder="Код кузова"></li>
+            <li><input class="input" id="kod_dvc" name="kod_dvc" placeholder="Код ДВС"></li>
+            <li><input class="input" id="kod_kpp" name="kod_kpp" placeholder="Код КПП"></li>
+            <li><input class="input" id="rinok_sbita" name="rinok_sbita" placeholder="Рынок сбыта"></li>
+        </ul>
+    </form>
+    <center><button class="next" onclick="dale()">Далее</button></center>
+    <center><div class="page">
+        <i class="active color first fa fa-square"></i>
+        <i class=" color second fa fa-square"></i>
+        <i class="color third fa fa-square"></i>
+        <i class="color fours fa fa-square"></i>
+    </div></center>
+    </body>
+</html>
