@@ -138,14 +138,7 @@ function startApp() {
                 }, 500);
             }
         }
-        /*create: function( event, ui ) {
-         alert("cr");
-         }*/
-
     }).focus(function () {
-
-
-
         $(this).autocomplete('search', '');
         setTimeout(function () {
             cordova.plugins.Keyboard.close();
@@ -153,16 +146,7 @@ function startApp() {
 
 
     });
-    /* $('#year').keyup(function (eventObject) {
-     if (eventObject.which == 13)
-     {
-     dale();
-     }
-     });*/
-    //var input = document.getElementById('year');
-//    input.oninput = function () {
 
-    //};//
     $("#marka").autocomplete({
         source: "http://buzapchasti.ru/mobile/request.php?id=marka", // url-адрес
 //        source:marka_main,
@@ -178,15 +162,9 @@ function startApp() {
         $(this).autocomplete('search', '');
 
     });
-    /*$('#marka').keyup(function (eventObject) {
-     if (eventObject.which == 13)
-     {
-     dale();
-     }
-     });*/
+
     $("#model").autocomplete({
         source: function (request, response) {
-
             $.ajax({
                 url: "http://buzapchasti.ru/mobile/request.php",
                 dataType: "json",
@@ -194,8 +172,8 @@ function startApp() {
                 data: {
                     id: "getModel",
                     marka: $("#marka").val(),
-                    year: $("#year").val()
-//            term: request.term
+                    year: $("#year").val(),
+                    term: request.term
                 },
                 // обработка успешного выполнения запроса
                 success: function (data) {
@@ -220,63 +198,8 @@ function startApp() {
         $(this).autocomplete('search', '');
 
     });
-    /*  $('#model').keyup(function (eventObject) {
-     if (eventObject.which == 13)
-     {
-     dale();
-     }
-     });*/
-}/*
- function getModel() {
- /*t = obj + 1;
- if (t > 2) {
- t = 0;
- return false;
- }
- arrModel = [];
- //    var year = $('#year').val();
- var marka = $('#marka').val();
- var od = {};
- od.id = "getModel";
- //    od.year = year;
- od.marka = marka;
- $.get("http://buzapchasti.ru/mobile/request.php", od, function (result) {
- console.log(result);
- return result;
- /*  arrModel = result;
- $("#model").one("focus");
- $("#model").trigger("focus");
- $("#model").autocomplete({
- source: result,
- minLength: 0
- }).focus(function () {
- $("#model").autocomplete('search', '');
- });
- }, "json");
- }*//*
-  function getVdvc(obj) {
-  p = obj + 1;
-  if (p > 2) {
-  p = 0;
-  return false;
-  }
-  arrVdvc = [];
-  var od = {};
-  od.id = "getV";
-  od.model = $('#model').val();
-  $.get("http://buzapchasti.ru/mobile/request.php", od, function (result) {
-  console.log(result);
-  arrVdvc = result;
-  $("#Vdvc").one("focus");
-  $("#Vdvc").trigger("focus");
-  $("#Vdvc").autocomplete({
-  source: result,
-  minLength: 0
-  }).focus(function () {
-  $("#Vdvc").autocomplete('search', '');
-  });
-  }, "json");
-  }*/
+
+}
 function DopPoleActivation() {
     if (!active) {
         initAutoComplete();
@@ -298,37 +221,13 @@ function DopPoleActivation() {
     }
 
 
-}/*
- function getPower(obj) {
- p = obj + 1;
- if (p > 2) {
- p = 0;
- return false;
- }
- arrPower = [];
- var od = {};
- od.id = "getP";
- od.vdvc = $('#Vdvc').val();
- od.model = $('#model').val();
- $.get("http://buzapchasti.ru/mobile/request.php", od, function (result) {
- console.log(result);
- arrPower = result;
- $("#power").one("focus");
- $("#power").trigger("focus");
- $("#power").autocomplete({
- source: result,
- minLength: 0
- }).focus(function () {
- $("#power").autocomplete('search', '');
- });
- }, "json");
- }*/
-window.onscroll = function () {
-    var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-//  if(scrolled==$(window)[0].scrollY){
-//      alert("END");
-//  }
-};
+}
+//window.onscroll = function () {
+//    var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+////  if(scrolled==$(window)[0].scrollY){
+////      alert("END");
+////  }
+//};
 function initAutoComplete() {
 
     $('#Vdvc').autocomplete({
@@ -342,8 +241,8 @@ function initAutoComplete() {
                 data: {
                     id: "getV",
                     model: $("#model").val(),
-                    year: $("#year").val()
-//            term: request.term
+                    year: $("#year").val(),
+                    term: request.term
                 },
                 // обработка успешного выполнения запроса
                 success: function (data) {
@@ -365,19 +264,46 @@ function initAutoComplete() {
     }).focus(function () {
         // getVdvc(p);
         window.scrollTo(0, $(this)[0].offsetTop);
-        $(this).autocomplete('search', '')
+        $(this).autocomplete('search', '');
 
-    })
+    });
 
-    $("#Tdvc").autocomplete({
-        source: dvs_type, // url-адрес
-//        source: "http://buzapchasti.ru/mobile/request.php?id=Tdvc", // url-адрес
-        minLength: 0 // минимальное количество для совершения запроса
+    $('#Tdvc').autocomplete({
+//        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
+        source: function (request, response) {
+
+            $.ajax({
+                url: "http://buzapchasti.ru/mobile/request.php",
+                dataType: "json",
+                // параметры запроса, передаваемые на сервер (последний - подстрока для поиска):
+                data: {
+                    id: "getT",
+                    model: $("#model").val(),
+                    year: $("#year").val(),
+                    term: request.term
+                },
+                // обработка успешного выполнения запроса
+                success: function (data) {
+                    // приведем полученные данные к необходимому формату и передадим в предоставленную функцию response
+                    response($.map(data, function (item) {
+                        return{
+                            value: item
+                        };
+                    }));
+                }
+            });
+        }, // url-адрес
+        minLength: 0, // минимальное количество для совершения запроса
+        response: function (event, ui) {
+            // $("#model").val("");
+            $('#ui-id-5').addClass("autocompleteSize");
+        }
+
     }).focus(function () {
         window.scrollTo(0, $(this)[0].offsetTop);
-        $(this).autocomplete('search', '')
+        $(this).autocomplete('search', '');
 
-    })
+    });
     $("#power").autocomplete({
         source: function (request, response) {
 
@@ -388,8 +314,8 @@ function initAutoComplete() {
                 data: {
                     id: "getP",
                     model: $("#model").val(),
-                    year: $("#year").val()
-//            term: request.term
+                    year: $("#year").val(),
+                    term: request.term
                 },
                 // обработка успешного выполнения запроса
                 success: function (data) {
@@ -411,31 +337,144 @@ function initAutoComplete() {
 //        getPower(p);
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '');
-    })
+    });
 //    /*
-    $("#privod").autocomplete({
-//     source: "http://buzapchasti.ru/mobile/request.php?id=privod", // url-адрес
-        source: privod, // url-адрес
-        minLength: 0 // минимальное количество для совершения запроса
+    $('#privod').autocomplete({
+//        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
+        source: function (request, response) {
+
+            $.ajax({
+                url: "http://buzapchasti.ru/mobile/request.php",
+                dataType: "json",
+                // параметры запроса, передаваемые на сервер (последний - подстрока для поиска):
+                data: {
+                    id: "getPrivod",
+                    model: $("#model").val(),
+                    year: $("#year").val(),
+                    term: request.term
+                },
+                // обработка успешного выполнения запроса
+                success: function (data) {
+                    // приведем полученные данные к необходимому формату и передадим в предоставленную функцию response
+                    response($.map(data, function (item) {
+                        return{
+                            value: item
+                        };
+                    }));
+                }
+            });
+        }, // url-адрес
+        minLength: 0, // минимальное количество для совершения запроса
+        response: function (event, ui) {
+            // $("#model").val("");
+            $('#ui-id-5').addClass("autocompleteSize");
+        }
+
     }).focus(function () {
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '')
     });
     $("#kuzov").autocomplete({
-        source: kuzov, // url-адрес
-//     source: "http://buzapchasti.ru/mobile/request.php?id=kuzov", // url-адрес
-        minLength: 0,
+//        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
+        source: function (request, response) {
+
+            $.ajax({
+                url: "http://buzapchasti.ru/mobile/request.php",
+                dataType: "json",
+                // параметры запроса, передаваемые на сервер (последний - подстрока для поиска):
+                data: {
+                    id: "getKuzov",
+                    model: $("#model").val(),
+                    year: $("#year").val(),
+                    term: request.term
+                },
+                // обработка успешного выполнения запроса
+                success: function (data) {
+                    // приведем полученные данные к необходимому формату и передадим в предоставленную функцию response
+                    response($.map(data, function (item) {
+                        return{
+                            value: item
+                        };
+                    }));
+                }
+            });
+        }, // url-адрес
+        minLength: 0, // минимальное количество для совершения запроса
         response: function (event, ui) {
-            $('#ui-id-8').addClass("autocompleteSize");
+            // $("#model").val("");
+            $('#ui-id-5').addClass("autocompleteSize");
         }
+
     }).focus(function () {
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '')
     });
     $("#kpp").autocomplete({
-//     source: "http://buzapchasti.ru/mobile/request.php?id=kpp", // url-адрес
-        source: kpp, // url-адрес
-        minLength: 0// минимальное количество для совершения запроса
+//        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
+        source: function (request, response) {
+
+            $.ajax({
+                url: "http://buzapchasti.ru/mobile/request.php",
+                dataType: "json",
+                // параметры запроса, передаваемые на сервер (последний - подстрока для поиска):
+                data: {
+                    id: "getKpp",
+                    model: $("#model").val(),
+                    year: $("#year").val(),
+                    term: request.term
+                },
+                // обработка успешного выполнения запроса
+                success: function (data) {
+                    // приведем полученные данные к необходимому формату и передадим в предоставленную функцию response
+                    response($.map(data, function (item) {
+                        return{
+                            value: item
+                        };
+                    }));
+                }
+            });
+        }, // url-адрес
+        minLength: 0, // минимальное количество для совершения запроса
+        response: function (event, ui) {
+            // $("#model").val("");
+            $('#ui-id-5').addClass("autocompleteSize");
+        }
+
+    }).focus(function () {
+        window.scrollTo(0, $(this)[0].offsetTop);
+        $(this).autocomplete('search', '')
+    });
+    $("#kod_dvc").autocomplete({
+//        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
+        source: function (request, response) {
+
+            $.ajax({
+                url: "http://buzapchasti.ru/mobile/request.php",
+                dataType: "json",
+                // параметры запроса, передаваемые на сервер (последний - подстрока для поиска):
+                data: {
+                    id: "getKodDvc",
+                    model: $("#model").val(),
+                    year: $("#year").val(),
+                    term: request.term
+                },
+                // обработка успешного выполнения запроса
+                success: function (data) {
+                    // приведем полученные данные к необходимому формату и передадим в предоставленную функцию response
+                    response($.map(data, function (item) {
+                        return{
+                            value: item
+                        };
+                    }));
+                }
+            });
+        }, // url-адрес
+        minLength: 0, // минимальное количество для совершения запроса
+        response: function (event, ui) {
+            // $("#model").val("");
+            $('#ui-id-5').addClass("autocompleteSize");
+        }
+
     }).focus(function () {
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '')
