@@ -90,6 +90,36 @@ function closeform() {
 //============get year END=======================
 //==============init autocomplite 1st page===============
 function startApp() {
+    activeTopMenuButton('1', 'Plus');
+//$(".subheader .MenuTopPlace").load("1.html #subMenu");
+
+    $('[data-number="1"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="1"');
+        page = 0;
+        dale();
+
+    });
+    $('[data-number="2"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="2"');
+    });
+    $('[data-number="3"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="3"');
+    });
+    $('[data-number="4"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="4"');
+    });
+    $('[data-number="5"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="5"');
+    });
+    $('[data-number="6"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        console.log('data-number="6"');
+    });
 
     $("#year").autocomplete({
 // source: "http://buzapchasti.ru/mobile/request.php?id=marka", // url-адрес
@@ -424,15 +454,42 @@ function initAutoComplete() {
     });
 }
 //====================init END==============================
+function activatePage(pageId) {
+    $("#pageone").hide();
+    $("#pagetwo").hide();
+    $("#pagethree").hide();
+    $("#pagefour").hide();
+    $("#" + pageId).show();
+}
+function activateMarker(markerClass) {
+    $(".first").removeClass("active");
+    $(".second").removeClass("active");
+    $(".third").removeClass("active");
+    $(".fours").removeClass("active");
+    $("." + markerClass).addClass("active");
+}
+function activeTopMenuButton(num, alt) {
+    $('[data-number="1"]').attr('src', 'img/subMenuPlus.png');
+    $('[data-number="2"]').attr('src', 'img/subMenuAllRequest.png');
+    $('[data-number="3"]').attr('src', 'img/subMenuHistory.png');
+    $('[data-number="4"]').attr('src', 'img/subMenuMessagess.png');
+    $('[data-number="5"]').attr('src', 'img/subMenuGarage.png');
+    $('[data-number="6"]').attr('src', 'img/subMenuSettings.png');
+    $("[data-number=" + num + "]").attr('src', "img/subMenu" + alt + "Active.png");
+}
 //переключатель страниц
 function dale() {
+
     page++;
     switch (page) {
         case 1:
-            $("#pageone").show();
-            $("#pagetwo").hide();
-            $(".second").removeClass("active");
-            $(".first").addClass("active");
+
+//            $("#pageone").show();
+//            $("#pagetwo").hide();
+            activatePage('pageone');
+//            $(".second").removeClass("active");
+//            $(".first").addClass("active");
+            activateMarker('first');
             break;
         case 2:
             //проверка заполнения обязательных полей
@@ -457,13 +514,15 @@ function dale() {
 //===конец проверки
 //меняем квадратики страниц
             $('.next').css({'margin': '70px 0 0 -2px'});
-            $(".first").removeClass("active");
-            $(".second").addClass("active");
-            $(".third").removeClass("active");
+//            $(".first").removeClass("active");
+//            $(".second").addClass("active");
+//            $(".third").removeClass("active");
+            activateMarker('second');
             //loadContent(2);
-            $("#pageone").hide();
-            $("#pagetwo").show();
-            $("#pagethree").hide();
+//            $("#pageone").hide();
+//            $("#pagetwo").show();
+//            $("#pagethree").hide();
+            activatePage('pagetwo');
             //заполняем массив страниц на которых мы побывали
             if (open_page.indexOf(1) == -1) {
                 open_page.push(1);
@@ -501,12 +560,14 @@ function dale() {
                     return false;
                 }
             }
-            $(".second").removeClass("active");
-            $(".third").addClass("active");
-            $(".fours").removeClass("active");
-            $("#pagetwo").hide();
-            $("#pagethree").show();
-            $("#pagefour").hide();
+//            $(".second").removeClass("active");
+//            $(".third").addClass("active");
+//            $(".fours").removeClass("active");
+            activateMarker('third');
+            activatePage('pagethree');
+//            $("#pagetwo").hide();
+//            $("#pagethree").show();
+//            $("#pagefour").hide();
             /*   
              $("#city").autocomplete({
              source: "http://buzapchasti.ru/mobile/request.php?id=city", // url-адрес
@@ -516,7 +577,7 @@ function dale() {
              });*/
             $("#actuality").autocomplete({
                 source: actuality, // url-адрес
-                minLength: 0, // минимальное количество для совершения запроса
+                minLength: 0 // минимальное количество для совершения запроса
 
             }).focus(function () {
                 $(this).autocomplete('search', '')
@@ -558,11 +619,13 @@ function dale() {
                 return false;
             }
 //var phone = $("#phone").val();
+
             var data = $(".inputForm").serialize();
             console.log(data);
             endreg(data);
-            $(".third").removeClass("active");
-            $(".fours").addClass("active");
+//            $(".third").removeClass("active");
+//            $(".fours").addClass("active");
+            activateMarker('fours');
             if (open_page.indexOf(4) == -1) {
                 open_page.push(4);
             }
@@ -637,13 +700,18 @@ function  endreg(data) {
     $.get("http://buzapchasti.ru/mobile/request.php", data, function (result) {
 
         console.log(result);
-        if (result == 1) {
-            $("#pagethree").hide();
-            $("#pagefour").show();
+        if (result === 1) {
+//            $("#pagethree").hide();
+//            $("#pagefour").show();
+            activatePage('pagefour');
+
         }
         else {
-            alert("При регистрации возникла ошибка. Пожалуйста повторите попытку позже.");
-            page--;
+            alert("При регистрации возникла ошибка. Возможно вы уже зарегестрированы.");
+            page = page - 2;
+            dale();
+
+            return false;
         }
 
     }, "json");
@@ -762,22 +830,22 @@ function TopMenuShow() {
 
     }
 }
-function activateMenuLinks() {
-    var Upblock = $("#Upblock");
-    $('[data-number="1"]').click(function () {
-        TopMenuShow();
-        Upblock.animate({'left': -150 + '%'}, 300);
-    });
-    $('[data-number="2"]').click(function () {
-
-        LoginFormActive();
-    });
-    $('[data-number="2"]').click(function () {
-
-        console.log("data2");
-        // loadContent("navigation");
-    });
-}
+//function activateMenuLinks() {
+//    var Upblock = $("#Upblock");
+//    $('[data-number="1"]').click(function () {
+//        TopMenuShow();
+//        Upblock.animate({'left': -150 + '%'}, 300);
+//    });
+//    $('[data-number="2"]').click(function () {
+//
+//        LoginFormActive();
+//    });
+//    $('[data-number="2"]').click(function () {
+//
+//        console.log("data2");
+//        // loadContent("navigation");
+//    });
+//}
 function LoginFormActive() {
     TopMenuShow();
     var Upblock = $("#Upblock");
