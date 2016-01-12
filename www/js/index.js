@@ -16,6 +16,7 @@ var arrVdvc = [];
 var arrPower = [];
 var active = false;
 var open_page = [];
+var RequestDataArray = [];
 var marka_main = ['Акура', 'Альфа Ромео', 'Ауди', 'Бентли', 'БМВ', 'Кадилак', 'Чери', 'Шевроле', 'Крайслер', 'Ситроен', 'Дэу', 'Додж', 'Фиат', 'Форд', 'Джили', 'Джи Эм Си', 'Грейт Волл', 'Хонда', 'Хаммер', 'Хёндай', 'Инфинити', 'Исузу', 'Ягуар', 'Джип', 'Киа', 'Ленд Ровер', 'Лексус', 'Линкольн', 'Мазда', 'Мерседес Бенс', 'Мини', 'Митсубиши', 'Ниссан', 'Опель', 'Пежо', 'Плимут', 'Понтиак', 'Порше', 'Рено', 'Ровер', 'Сааб', 'Сеат', 'Шкода', 'Смарт', 'Ссанг Йонг', 'Субару', 'Сузуки', 'Тойота', 'Фольксваген', 'Вольво', 'ВАЗ', 'ГАЗ', 'Москвич', 'ТагАЗ', 'УАЗ'];
 //var marka_replace=[]
 var yearsArr = [];
@@ -34,7 +35,6 @@ var kuzov = ['Седан', 'Хэтчбек 5 дв.', 'Хэтчбек 3 дв.', '
 document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() {
     console.log('Device is ready');
-
     screen.lockOrientation('portrait');
     deviceIsReady = true;
     document.addEventListener("backbutton", function (e) {
@@ -42,7 +42,6 @@ function onDeviceReady() {
         //            navigator.app.backHistory();
         page = page - 2;
         dale();
-
     }, false);
     $('.input ').keyup(function (eventObject) {
 //        if (eventObject.which === 13)
@@ -58,7 +57,6 @@ function onDeviceReady() {
         }
     });
     ;
-
 }
 //============get year=======================
 function getyear() {
@@ -88,21 +86,29 @@ function closeform() {
     $('#yeas_list').hide();
 }
 //============get year END=======================
+//
 //==============init autocomplite 1st page===============
-function startApp() {
-    activeTopMenuButton('1', 'Plus');
-//$(".subheader .MenuTopPlace").load("1.html #subMenu");
-
+function InitSubMenuButtons() {
+    var body = $("#body");
+    var header = $("header");
     $('[data-number="1"]').click(function () {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        header.load("newRequest.html .head");
+//        var MainPage = $("#MainPage");
+//        MainPage.show();
+//        body.load("newRequest.html #newRequest", function () {
+//            InitSubMenuButtons();
+//            
+//        });
         console.log('data-number="1"');
-        page = 0;
-        dale();
-
+//        page = 0;
+//        dale();
     });
     $('[data-number="2"]').click(function () {
+        
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
         console.log('data-number="2"');
+        GetAllRequets();
     });
     $('[data-number="3"]').click(function () {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
@@ -120,6 +126,11 @@ function startApp() {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
         console.log('data-number="6"');
     });
+}
+function startApp() {
+    activeTopMenuButton('1', 'Plus');
+    InitSubMenuButtons();
+//$(".subheader .MenuTopPlace").load("1.html #subMenu");
 
     $("#year").autocomplete({
 // source: "http://buzapchasti.ru/mobile/request.php?id=marka", // url-адрес
@@ -143,10 +154,7 @@ function startApp() {
         setTimeout(function () {
             cordova.plugins.Keyboard.close();
         }, 1000);
-
-
     });
-
     $("#marka").autocomplete({
         source: "http://buzapchasti.ru/mobile/request.php?id=marka", // url-адрес
 //        source:marka_main,
@@ -154,15 +162,12 @@ function startApp() {
         response: function (event, ui) {
             window.scrollTo(0, $(this)[0].offsetTop);
             $("#model").val("");
-
             $('#ui-id-2').addClass("autocompleteSize");
         }// минимальное количество для совершения запроса
     }).focus(function () {
 
         $(this).autocomplete('search', '');
-
     });
-
     $("#model").autocomplete({
         source: function (request, response) {
             $.ajax({
@@ -196,9 +201,7 @@ function startApp() {
     }).focus(function () {
 
         $(this).autocomplete('search', '');
-
     });
-
 }
 function DopPoleActivation() {
     if (!active) {
@@ -262,12 +265,10 @@ function initAutoComplete() {
         }
 
     }).focus(function () {
-        // getVdvc(p);
+// getVdvc(p);
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '');
-
     });
-
     $('#Tdvc').autocomplete({
 //        source: "http://buzapchasti.ru/mobile/request.php?id=Vdvc&model=" + $("#model").val(), // url-адрес
         source: function (request, response) {
@@ -302,7 +303,6 @@ function initAutoComplete() {
     }).focus(function () {
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '');
-
     });
     $("#power").autocomplete({
         source: function (request, response) {
@@ -479,7 +479,6 @@ function initAutoComplete() {
         window.scrollTo(0, $(this)[0].offsetTop);
         $(this).autocomplete('search', '')
     });
-
     $("#rinok_sbita").autocomplete({
 //     source: "http://buzapchasti.ru/mobile/request.php?id=kpp", // url-адрес
         source: regions, // url-адрес
@@ -514,7 +513,15 @@ function activeTopMenuButton(num, alt) {
     $('[data-number="4"]').attr('src', 'img/subMenuMessagess.png');
     $('[data-number="5"]').attr('src', 'img/subMenuGarage.png');
     $('[data-number="6"]').attr('src', 'img/subMenuSettings.png');
+    $('[data-page="1"]').hide();
+    $('[data-page="2"]').hide();
+    $('[data-page="3"]').hide();
+    $('[data-page="4"]').hide();
+    $('[data-page="5"]').hide();
+    $('[data-page="6"]').hide();
+    $("[data-page=" + num + "]").show();
     $("[data-number=" + num + "]").attr('src', "img/subMenu" + alt + "Active.png");
+
 }
 //переключатель страниц
 function dale() {
@@ -739,20 +746,25 @@ function  endreg(data) {
     $.get("http://buzapchasti.ru/mobile/request.php", data, function (result) {
 
         console.log(result);
-        if (result === 1) {
+        if (result.data === 1) {
 //            $("#pagethree").hide();
 //            $("#pagefour").show();
             activatePage('pagefour');
-
         }
         else {
-            alert("При регистрации возникла ошибка. Возможно вы уже зарегестрированы.");
-            page = page - 2;
-            dale();
+            if (result.data === 3) {
+//            $("#pagethree").hide();
+//            $("#pagefour").show();
+                alert("Ваш запрос успешно добавлен!");
+                page = page - 2;
+                dale();
+                return false;
+            }
+            else {
+                alert("При регистрации возникла ошибка. Возможно вы уже зарегестрированы.");
+            }
 
-            return false;
         }
-
     }, "json");
 }
 function confirm(phone, code) {
@@ -776,8 +788,13 @@ function confirm(phone, code) {
 $(function () {
     console.log("ready!");
     generateYears();
-//                loadData();
     startApp();
+//    $("#body").load('newRequest.html #newRequest', function () {
+//        
+//
+//    });
+//                loadData();
+
     /* var nextorno = true;
      swiper = new Swiper('.swiper-container', {
      // Optional parameters
@@ -866,7 +883,6 @@ function TopMenuShow() {
             menu.empty();
             topMenu = false;
         }, 302);
-
     }
 }
 //function activateMenuLinks() {
@@ -892,4 +908,121 @@ function LoginFormActive() {
     Upblock.load("1.html #loginForm ", function () {
 
     });
+}
+function GetAllRequets() {
+    RequestDataArray = [];
+    console.log('GetAllRequets');
+    var cont = $("#OtherPageLoader");
+    var header = $("header");
+
+//    var MainPage = $("#MainPage");
+//    MainPage.hide();
+    cont.load("RequestsList.html #RequestsList", function () {
+        $("#RequestsList").css({'height': $(window).height() - $("header").height() - $("#subMenu").height(), 'overflow-y': 'scroll'});
+        console.log("page RequestsList loaded");
+//        InitSubMenuButtons();
+    });
+    header.load("RequestsList.html .head");
+    var data = {};
+    data.id = 'getAllReq';
+    $.get("http://buzapchasti.ru/mobile/request.php", data, function (result) {
+        console.log(result.data);
+        for (var i in result.data) {
+            var obj = result.data[i];
+            RequestDataArray.push(obj);
+            $("#RequestsList ul").append("<li onclick=\"ShowFullInfo('" + i + "')\"><h1>" + obj.marka + " " + obj.model + " " + obj.year + " " + obj.Vdvc + " " + getShortKpp(obj.Tkpp) + "</h1><span class='NameAndCity'>" + obj.username + ", " + obj.city + "</span><br><span class='SparesAndServices'>" + getServicesAndSpares(obj.сountspares, obj.countservices) + "</span><span class='orderDate'>" + obj.date + "</span><img src='img/arrow-right.png'></li>");
+        }
+    }, "json");
+//    $("#swipe").hide();
+}
+function getServicesAndSpares(spares, services) {
+    var res = "";
+    if (spares > 0) {
+        res = "Запчастей " + res + spares;
+    }
+    if (services > 0) {
+        res = res + ", " + "Услуг " + services;
+    }
+    return res;
+}
+function getShortKpp(kpp) {
+    var res = "";
+    switch (kpp) {
+        case "Автоматическая":
+            res = "AT";
+            break;
+        case "Механическая":
+            res = "MT";
+            break;
+        case 'Роботизированная с двумя сцеплениями':
+            res = 'SAT';
+            break;
+        case 'Роботизированная с одним сцеплением':
+            res = 'SAT';
+            break;
+        case 'Роботизированная':
+            res = 'SAT';
+            break;
+        case 'Вариатор':
+            res = 'CVT';
+            break;
+        case 'Прямая передача':
+            res = 'SST';
+            break;
+        case 'Роботизированная секвентальная':
+            res = 'SAT';
+            break;
+        default:
+            res = "";
+    }
+    return res;
+}
+function ShowFullInfo(id) {
+    console.log(id);
+    var data = JSON.parse(RequestDataArray[id].description);
+    var cont = $("#RequestsList");
+    cont.load("fullInfoRequest.html #fullInfoAboutRequest", function () {
+//        $("#fullInfoAboutRequest").css({'height': $(window).height() - $("header").height() - $("#subMenu").height()});
+        $("#RequestsList").css({'height': '100%', 'overflow-y': 'visible'});
+        console.log("page fullInfoAboutRequest loaded");
+        var obj = RequestDataArray[id];
+        $(".shfullInfoAboutRequest span").text(obj.marka + " " + obj.model + " " + obj.year + " " + obj.Vdvc + " " + getShortKpp(obj.Tkpp));
+//        InitSubMenuButtons();
+        data.year !== '' ? $(".charactik [data-modelinfo='year']").text("Год: "+data.year) : '';
+        data.marka !== '' ? $(".charactik [data-modelinfo='marka']").text("Марка: " + data.marka) : '';
+        data.model !== '' ? $(".charactik [data-modelinfo='model']").text("Модель: " + data.model) : '';
+        data.Tdvc !== '' ? $(".charactik [data-modelinfo='Tdvc']").text("Тип ДВС: " + data.Tdvc) : '';
+        data.Vdvc !== '' ? $(".charactik [data-modelinfo='Vdvc']").text("Объём ДВС: " + data.Vdvc) : '';
+        data.Pdvc !== '' ? $(".charactik [data-modelinfo='Pdvc']").text("Мощьность: " + data.power) : '';
+        data.privod !== '' ? $(".charactik [data-modelinfo='privod']").text("Привод: " + data.privod) : '';
+        data.kuzov !== '' ? $(".charactik [data-modelinfo='kuzov']").text("Кузов: " + data.kuzov) : '';
+        data.kpp !== '' ? $(".charactik [data-modelinfo='kpp']").text("КПП: " + data.kpp) : '';
+        data.rinok_sbita !== '' ? $(".charactik [data-modelinfo='market']").text("Рынок сбыта: " + data.rinok_sbita) : '';
+        data.vinkod !== '' ? $(".charactik [data-modelinfo='VIN']").text("VIN: " + data.vinkod) : '';
+        
+//        $(".charactik [data-modelinfo='power']").text("Мощность:" + data.power);
+
+        $(".infoSelf [data-row='name']").text("Имя:" + data.username);
+        $(".infoSelf [data-row='city']").text("Город:" + data.city);
+        $(".infoSelf [data-row='phone']").text("Телефон:" + data.phone);
+        $(".infoSelf [data-row='mail']").text("Телефон:" + data.mail);
+
+//        $(".info [data-modelinfo='power']").text("Мощность:" + obj.description.substring(obj.description.indexOf("мощность ДВС") + "мощность ДВС:".length, obj.description.indexOf("Привод")));
+//        $(".info [data-modelinfo='Vin']").text("VIN:"+obj.Vdvc);
+        for (var i in data.name_part) {
+            var t = data.name_part[i];
+            var num = parseInt(i) + 1;
+            $("[data-modelinfo='spares']").append("<li>" + num + "." + t + "</li>");
+        }
+        for (var i in data.service) {
+            var t = data.service[i];
+            var num = parseInt(i) + 1;
+            $("[data-modelinfo='services']").append("<li>" + num + "." + t + "</li>");
+        }
+
+
+    });
+}
+function clickBack(){
+    $('[data-number=\"2\"]').click();
 }
