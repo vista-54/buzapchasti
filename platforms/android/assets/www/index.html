@@ -12,49 +12,190 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="css/css.css"/>
         <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/>
         <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
-        <script src="js/index.js"></script>
-        <script src="js/jq/jquery.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+        <link href="css/slider/swiper.css" rel="Stylesheet">
+        <link href="css/slider/swiper.min.css" rel="Stylesheet">
+        <!--<link href="css/bs/bootstrap.min.css" rel="Stylesheet">-->
+        
+
+
+        <script>
+
+        </script>
     </head>
-    <body>
-        <header>
-            <div class="head">
-                <i id="f" class="hc fa fa-bars"></i> <span class="title" >НОВЫЙ ЗАПРОС</span><span class="sign-out"><i id="s"  class="hc fa fa-sign-out"></i></span>
+    <body id="body">
+
+        <div id="newRequest">
+            <header>
+                <div class="head">
+                    <span class="title" >НОВЫЙ ЗАПРОС</span><span class="sign-out"><i id="s"  class="hc fa fa-sign-out"></i></span>
+                </div>
+            </header>
+
+            <div id="Upblock"></div>
+
+            <div id="swipe" >
+
+
+
+                <div id="page">
+                    <div id='subMenu'>
+                        <div>
+                            <ul>
+                                <li><a><img data-number='1' alt='Plus' src='img/subMenuPlus.png'></a></li>
+                                <li><a><img data-number='2' alt='AllRequest' src='img/subMenuAllRequest.png'></a></li>
+                                <li><a><img data-number='3' alt='History' src='img/subMenuHistory.png'></a></li>
+                                <li><a><img data-number='4' alt='Messagess' src='img/subMenuMessagess.png'></a></li>
+                                <li><a><img data-number='5' alt='Garage' src='img/subMenuGarage.png'></a></li>
+                                <li><a><img data-number='6' alt='Settings' src='img/subMenuSettings.png'></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="OtherPageLoader"></div>
+                    <div id="MainPage" data-page="1">
+                        <div id="pageone" >
+
+                            <div class="subheader">
+                                <div class='MenuTopPlace'>
+
+                                </div>
+                                <span>ПАРАМЕТРЫ ЛЕГКОВОГО АВТО</span>
+                            </div>
+                            <form class="inputForm">
+                                <ul>
+
+                                    <li><input class="input" id="year" name="year"  placeholder="Год выпуска"  ></li>
+                                    <li> <input class="input" id="marka" name="marka" placeholder="Марка авто"></li>
+                                    <li> <input class="input" id="model" name="model"  placeholder="Модель"></li>
+                                </ul>
+                            </form>
+                            <center> <button  class="btnZ" id="dop_polebutton" onclick="DopPoleActivation()">Знаете больше о машине?</button>
+
+                            </center>
+                            <center> <img class="arrow" src="img/arrowdown.png"></center>
+                            <form id="dop_pole" class="inputForm">
+                                <ul>
+                                    <li><input class="input" id="Tdvc" name="Tdvc" placeholder="Тип ДВС" ></li>
+                                    <li><input class="input" id="Vdvc" name="Vdvc"  placeholder="Объем ДВС"></li>
+                                    <li><input class="input" id="power" name="power" placeholder="Мощность(ЛС)"></li>
+                                    <li><input class="input" id="privod" name="privod" placeholder="Привод"></li>
+                                    <li><input class="input" id="kuzov" name="kuzov" placeholder="Кузов"></li>
+                                    <li><input class="input" id="kpp" name="kpp" placeholder="КПП"></li>
+                                    <!--<li><input class="input" id="kod_kuzov" name="kod_kuzov" placeholder="Код кузова"></li>-->
+                                    <li><input class="input" id="kod_dvc" name="kod_dvc" placeholder="Код ДВС"></li>
+                                    <!--<li><input class="input" id="kod_kpp" name="kod_kpp" placeholder="Код КПП"></li>-->
+                                    <li><input class="input" id="rinok_sbita" name="rinok_sbita" placeholder="Рынок сбыта"></li>
+                                    <li><input class="input" id="vinkod" name="vinkod" placeholder="VIN код или Frame"></li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div id="pagetwo" >
+                            <div class="subheader">
+                                <div class='MenuTopPlace'>
+
+                                </div>
+                                <span>ВВЕДИТЕ НАЗВАНИЯ ЗАПЧАСТЕЙ</span>
+                            </div>
+                            <form class="inputForm">
+                                <ul id="name_parts">
+
+                                    <li><input class="input name_part" id="name_part" name="name_part[0]"  placeholder="Введите название запчасти"></li>
+                                </ul>
+                            </form>
+                            <center><ul class="ControllButtonsPageTwo">
+                                    <li class="btnPageTwo"><button class="btnptActive" onclick="addFieldPart()">Добавить запчасть</button></li> 
+                                    <li class="btnPageTwo"><button class="btnpt" onclick="addFieldService()">Добавить услуги</button></li>
+                                </ul></center>
+                            <center class="semiImg"> <img class="si" src="img/SemiarrowdownactiveLeft.png"><img class="si"  src="img/semInactiveArrowDownleft.png"></center>
+                            <div id="add_service">
+                                <form  class="inputForm">
+                                    <ul id="servicesinput">
+                                        <li><input class="input" id="service" name="service[0]" placeholder="Введите название услуги" ></li>
+                                    </ul>
+
+
+                                </form>
+                                <div id="imagelist"></div>
+                                <div id="images">
+                                    <center>  <label> <input class="downloadimg" id="imgInp" type="file" onchange="readURL(this);"> 
+                                            <img class="downloadimglabel" id="add_img" src="img/downloadimage.png"></label>
+                                    </center>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="pagethree" >
+                            <div class="subheader">
+                                <div class='MenuTopPlace'>
+
+                                </div>
+                                <span>ПАРАМЕТРЫ ЗАПРОСА</span>
+                            </div>
+                            <form class="inputForm">
+                                <ul id="blockp3">
+
+                                    <li><input class="input" id="city" name="city" placeholder="Ваш город"></li>
+                                    <li><input class="input" id="actuality" name="actuality" placeholder="Актуальность 7 дней"></li>
+                                </ul>
+                            </form>
+                            <div class="subheader">
+
+
+                                <span>КОНТАКТНЫЕ ДАННЫЕ</span>
+                            </div>
+                            <form class="inputForm">
+                                <ul id="blockp4">
+
+                                    <li><input class="input" type="text" id="username" name="username" placeholder="Имя"></li>
+                                    <li><input class="input" type="tel" id="phone" name="phone" placeholder="+7 (XXX) XXX-XXX"></li>
+                                    <li><input class="input" id="mail" name="mail" placeholder="Эл. почта"></li>
+                                    <li><input class="input" id="password" name="password" placeholder="Пароль"></li>
+                                    <li><input class="check" type="checkbox" id="nonenumber" name="nonenumber"><span class="desccheckone">Скрыть мой номер телефона</span><br><span class="descchecktwo">Уведомления будут приходить на эл. почту и в приложение</span></li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div id="pagefour">
+                            <div class="subheader">
+                                <div class='MenuTopPlace'>
+
+                                </div>
+                                <span>ПОДТВЕРДИТЕ НОМЕР ТЕЛЕФОНА</span>
+                            </div>
+                            <form class="inputForm">
+                                <span class="textp4">После подтверждения номера мобильного телефона, ваш запрос будет отправлен в более 1000 компаний, занимающихся запасными частями.</span>
+                                <span class="textp5" >Они свяжуться с вами по указанным контактным данным, которые можно изменить в вашем профиле. </span>
+                            </form>
+                            <input class="input" id="code" name="code" placeholder="Код подтверждения">
+                        </div>
+
+
+
+                        <center><button class="next" onclick="dale()">Далее</button></center>
+                        <center><div class="page">
+                                <i class="active color first fa fa-square"></i>
+                                <i class=" color second fa fa-square"></i>
+                                <i class="color third fa fa-square"></i>
+                                <i class="color fours fa fa-square"></i>
+                            </div></center>
+                        <div id="end"></div>
+                    </div>
+                </div>
             </div>
-        </header>
-        <div class="subheader">
-            <span>ПАРАМЕТРЫ ЛЕГКОВОГО АВТО</span>
         </div>
-        <form class="inputForm">
-            <ul>
-                <li><input class="input" id="year" name="year" placeholder="Год выпуска"></li>
-                <li><input class="input" id="marka" name="marka" placeholder="Марка авто"></li>
-                <li><input class="input" id="model" name="model" placeholder="Модель"></li>
-            </ul>
-        </form>
-    <center> <button  class="btnZ" id="dop_polebutton" onclick="DopPoleActivation()">Знаете больше о машине?</button>
-      
-    </center>
-      <center> <img class="arrow" src="img/arrowdown.png"></center>
-      <form id="dop_pole" class="inputForm">
-        <ul>
-            <li><input class="input" id="Vdvc" name="Vdvc" placeholder="Объем ДВС"></li>
-            <li><input class="input" id="Tdvc" name="Tdvc" placeholder="Тип ДВС"></li>
-            <li><input class="input" id="power" name="power" placeholder="Мощность(ЛС)"></li>
-            <li><input class="input" id="privod" name="pridvo" placeholder="Привод"></li>
-            <li><input class="input" id="kuzov" name="kuzov" placeholder="Кузов"></li>
-            <li><input class="input" id="kpp" name="kpp" placeholder="КПП"></li>
-            <li><input class="input" id="kod_kuzov" name="kod_kuzov" placeholder="Код кузова"></li>
-            <li><input class="input" id="kod_dvc" name="kod_dvc" placeholder="Код ДВС"></li>
-            <li><input class="input" id="kod_kpp" name="kod_kpp" placeholder="Код КПП"></li>
-            <li><input class="input" id="rinok_sbita" name="rinok_sbita" placeholder="Рынок сбыта"></li>
-        </ul>
-    </form>
-    <center><button class="next" onclick="dale()">Далее</button></center>
-    <center><div class="page">
-        <i class="active color first fa fa-square"></i>
-        <i class=" color second fa fa-square"></i>
-        <i class="color third fa fa-square"></i>
-        <i class="color fours fa fa-square"></i>
-    </div></center>
+<script type="text/javascript" src="cordova.js"></script>
+        <script src="js/jq/jquery-2.1.4.min.js"></script>
+         <script src="js/jq/jquery-ui.js"></script>
+        <script src="js/jq/jquery-ui.min.js"></script>
+        <script src="js/jq/external/jquery.js"></script>
+        <script src="js/jq/jquery.touchSwipe.js"></script>
+        <script src="js/jq/jquery.maskedinput.min.js"></script>
+        <!--        <script src="js/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js" ></script>
+                <script src="js/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js" ></script>-->
+        <script src="js/index.js"></script>
+        <script src="js/request.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+       
+        <script src="js/slider/swiper.min.js"></script>
     </body>
 </html>
