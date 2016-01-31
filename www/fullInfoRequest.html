@@ -3,41 +3,46 @@
         <img alt="arrow-left" onclick="clickBack()" src='img/arrow-right.png'>
         <span class="titleRequest"></span>
     </div>
-    <div class="info">
-        <ul class="infoSelf">
-            <li data-row="name"></li>
-            <li data-row="city"></li>
-            <li data-row="phone"></li>
-            <li data-row="mail"></li>
-        </ul>
-        <ul  class="charactik">
-            <li data-modelinfo="year"></li>
-            <li data-modelinfo="marka"></li>
-            <li data-modelinfo="model"></li>
-            <li data-modelinfo="Tdvc"></li>
-            <li data-modelinfo="Vdvc"></li>
-            <li data-modelinfo="Pdvc"></li>
-            <li data-modelinfo="privod"></li>
-            <li data-modelinfo="kuzov"></li>
-            <li data-modelinfo="kpp"></li>
-            <li data-modelinfo="market"></li>
-            <li data-modelinfo="VIN"></li>
-        </ul>
-       
+    <div>
+        <div class="info">
+            <ul class="infoSelf">
+                <li data-row="name"></li>
+                <li data-row="city"></li>
+                <li data-row="phone"></li>
+                <li data-row="mail"></li>
+            </ul>
+            <ul  class="charactik">
+                <li data-modelinfo="year"></li>
+                <li data-modelinfo="marka"></li>
+                <li data-modelinfo="model"></li>
+                <li data-modelinfo="Tdvc"></li>
+                <li data-modelinfo="Vdvc"></li>
+                <li data-modelinfo="Pdvc"></li>
+                <li data-modelinfo="privod"></li>
+                <li data-modelinfo="kuzov"></li>
+                <li data-modelinfo="kpp"></li>
+                <li data-modelinfo="market"></li>
+                <li data-modelinfo="VIN"></li>
+            </ul>
+
+
+            <div class="parentSpares">
+                <h1 class="titleSpares">Запчасти</h1>
+                <ul  class="spares" data-modelinfo="spares">
+
+                </ul>
+            </div>
+            <div class="parentSpares">
+                <h1 class="titleSpares">Работы</h1>
+                <ul class="spares" data-modelinfo="services">
+
+                </ul>
+            </div>
+            <!--<span data-modelinfo="Vin"></span>-->
+        </div><div id="chatContainer">
+            <center><button class="next"  >Ответить</button></center>
+        </div>
         
-        <div class="parentSpares">
-            <h1 class="titleSpares">Запчасти</h1>
-            <ul  class="spares" data-modelinfo="spares">
-
-            </ul>
-        </div>
-        <div class="parentSpares">
-            <h1 class="titleSpares">Работы</h1>
-            <ul class="spares" data-modelinfo="services">
-
-            </ul>
-        </div>
-        <!--<span data-modelinfo="Vin"></span>-->
+        
     </div>
-
 </div>

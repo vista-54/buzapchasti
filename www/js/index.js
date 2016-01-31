@@ -105,7 +105,7 @@ function InitSubMenuButtons() {
 //        dale();
     });
     $('[data-number="2"]').click(function () {
-        
+
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
         console.log('data-number="2"');
         GetAllRequets();
@@ -981,14 +981,19 @@ function ShowFullInfo(id) {
     console.log(id);
     var data = JSON.parse(RequestDataArray[id].description);
     var cont = $("#RequestsList");
+//    CheckChat();
     cont.load("fullInfoRequest.html #fullInfoAboutRequest", function () {
+        $("button.next").click(function () {
+            console.log("chat");
+            chatLoad($("button.next").attr('data-request-id'));
+        });
 //        $("#fullInfoAboutRequest").css({'height': $(window).height() - $("header").height() - $("#subMenu").height()});
         $("#RequestsList").css({'height': '100%', 'overflow-y': 'visible'});
         console.log("page fullInfoAboutRequest loaded");
         var obj = RequestDataArray[id];
         $(".shfullInfoAboutRequest span").text(obj.marka + " " + obj.model + " " + obj.year + " " + obj.Vdvc + " " + getShortKpp(obj.Tkpp));
 //        InitSubMenuButtons();
-        data.year !== '' ? $(".charactik [data-modelinfo='year']").text("Год: "+data.year) : '';
+        data.year !== '' ? $(".charactik [data-modelinfo='year']").text("Год: " + data.year) : '';
         data.marka !== '' ? $(".charactik [data-modelinfo='marka']").text("Марка: " + data.marka) : '';
         data.model !== '' ? $(".charactik [data-modelinfo='model']").text("Модель: " + data.model) : '';
         data.Tdvc !== '' ? $(".charactik [data-modelinfo='Tdvc']").text("Тип ДВС: " + data.Tdvc) : '';
@@ -999,14 +1004,18 @@ function ShowFullInfo(id) {
         data.kpp !== '' ? $(".charactik [data-modelinfo='kpp']").text("КПП: " + data.kpp) : '';
         data.rinok_sbita !== '' ? $(".charactik [data-modelinfo='market']").text("Рынок сбыта: " + data.rinok_sbita) : '';
         data.vinkod !== '' ? $(".charactik [data-modelinfo='VIN']").text("VIN: " + data.vinkod) : '';
-        
-//        $(".charactik [data-modelinfo='power']").text("Мощность:" + data.power);
 
+//        $(".charactik [data-modelinfo='power']").text("Мощность:" + data.power);
+        var phoneValueAttr=data.phone.replace('(','');
+        phoneValueAttr=phoneValueAttr.replace(')','');
+        phoneValueAttr=phoneValueAttr.replace(/-/g,'');
         $(".infoSelf [data-row='name']").text("Имя:" + data.username);
         $(".infoSelf [data-row='city']").text("Город:" + data.city);
         $(".infoSelf [data-row='phone']").text("Телефон:" + data.phone);
+        $(".infoSelf [data-row='phone']").attr("data-value",phoneValueAttr);
+        
         $(".infoSelf [data-row='mail']").text("Телефон:" + data.mail);
-
+        $("button.next").attr('data-request-id', obj.id);
 //        $(".info [data-modelinfo='power']").text("Мощность:" + obj.description.substring(obj.description.indexOf("мощность ДВС") + "мощность ДВС:".length, obj.description.indexOf("Привод")));
 //        $(".info [data-modelinfo='Vin']").text("VIN:"+obj.Vdvc);
         for (var i in data.name_part) {
@@ -1023,6 +1032,36 @@ function ShowFullInfo(id) {
 
     });
 }
-function clickBack(){
+function clickBack() {
     $('[data-number=\"2\"]').click();
+}
+//проверяем есть ли диалог между этими пользователями если есть то грузим его, если нету грузим кнопку Отправить
+function CheckChat(request_id,sender,getter){
+    var data={};
+    data.id='checkChat';
+    data.request_id=request_id;
+    data.sender=sender;
+    data.getter=getter;
+    $.get('http://buzapchasti.ru/mobile/chat.php',data,function(result){
+        if(typeof result==='object'){
+            var dataCh = {};
+        dataCh.id = 'getchat';
+        dataCh.request_id = result.data[0];
+        $.get('http://buzapchasti.ru/mobile/chat.php', dataCh, function (result) {
+            console.log(result);
+            dialogId =  dataCh.request_id;
+            chatLoaded(dataCh.request_id,dialogId);
+            
+        }, 'json');
+//            return true;
+        }
+        else{
+             data.id = 'CreateNewDialog';
+               $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
+            console.log(result);
+            dialogId = result.data;
+        }, 'json');
+//            return false;
+        }
+    },'json');
 }
