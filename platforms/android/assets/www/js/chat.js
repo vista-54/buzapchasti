@@ -18,14 +18,14 @@ function chatLoad(reqId) {
 
 //    }
 }
-function chatLoaded(reqId,dialogId) {
+function chatLoaded(reqId, dialogId) {
     $("#chatContainer").load("chat.html #chat", function () {
         var submitBtn = $(".sendButton");
         submitBtn.attr('reqId', reqId);
-loadMessages(dialogId);
-        
+        loadMessages(dialogId);
+
         submitBtn.click(function () {
-            
+
             loadMessages(dialogId);
             var chatMess = $('#chat input').val('');
 //            var date = new Date();
@@ -34,25 +34,25 @@ loadMessages(dialogId);
         });
     });
 }
-function loadMessages(dialogId){
+function loadMessages(dialogId) {
     var chatMess = $('#chat input').val();
-              var  data = {};
-            data.id = 'addMessage';
-            data.user = 'test';
-            data.message = chatMess;
-            data.dialog_id = dialogId;
-            console.log(data);
+    var data = {};
+    data.id = 'addMessage';
+    data.user = 'test';
+    data.message = chatMess;
+    data.dialog_id = dialogId;
+    console.log(data);
 //            data.requestID = submitBtn.attr('reqId');
 //            data.currentDate = date.getTime();
 //                $.get('')
-            var chatCnt = $(".chatContainer");
-            chatCnt.empty();
-            $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
-                console.log(result);
-                for (var i in result.data) {
-                    var obj = result.data[i];
-                    chatCnt.append("<h1  class='msg'><span>"+obj.message+"</span></h1>");
+    var chatCnt = $(".chatContainer");
+    chatCnt.empty();
+    $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
+        console.log(result);
+        for (var i in result.data) {
+            var obj = result.data[i];
+            chatCnt.append("<h1  class='msg'><span>" + obj.message + "</span></h1>");
 //                    chatMess.val('');
-                }
-            }, 'json');
+        }
+    }, 'json');
 }

@@ -1006,14 +1006,14 @@ function ShowFullInfo(id) {
         data.vinkod !== '' ? $(".charactik [data-modelinfo='VIN']").text("VIN: " + data.vinkod) : '';
 
 //        $(".charactik [data-modelinfo='power']").text("Мощность:" + data.power);
-        var phoneValueAttr=data.phone.replace('(','');
-        phoneValueAttr=phoneValueAttr.replace(')','');
-        phoneValueAttr=phoneValueAttr.replace(/-/g,'');
+        var phoneValueAttr = data.phone.replace('(', '');
+        phoneValueAttr = phoneValueAttr.replace(')', '');
+        phoneValueAttr = phoneValueAttr.replace(/-/g, '');
         $(".infoSelf [data-row='name']").text("Имя:" + data.username);
         $(".infoSelf [data-row='city']").text("Город:" + data.city);
         $(".infoSelf [data-row='phone']").text("Телефон:" + data.phone);
-        $(".infoSelf [data-row='phone']").attr("data-value",phoneValueAttr);
-        
+        $(".infoSelf [data-row='phone']").attr("data-value", phoneValueAttr);
+
         $(".infoSelf [data-row='mail']").text("Телефон:" + data.mail);
         $("button.next").attr('data-request-id', obj.id);
 //        $(".info [data-modelinfo='power']").text("Мощность:" + obj.description.substring(obj.description.indexOf("мощность ДВС") + "мощность ДВС:".length, obj.description.indexOf("Привод")));
@@ -1036,32 +1036,34 @@ function clickBack() {
     $('[data-number=\"2\"]').click();
 }
 //проверяем есть ли диалог между этими пользователями если есть то грузим его, если нету грузим кнопку Отправить
-function CheckChat(request_id,sender,getter){
-    var data={};
-    data.id='checkChat';
-    data.request_id=request_id;
-    data.sender=sender;
-    data.getter=getter;
-    $.get('http://buzapchasti.ru/mobile/chat.php',data,function(result){
-        if(typeof result==='object'){
+function CheckChat(request_id, sender, getter) {
+    var data = {};
+    data.id = 'checkChat';
+    data.request_id = request_id;
+    data.sender = sender;
+    data.getter = getter;
+    $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
+        if (result.data.length > 0) {
             var dataCh = {};
-        dataCh.id = 'getchat';
-        dataCh.request_id = result.data[0];
-        $.get('http://buzapchasti.ru/mobile/chat.php', dataCh, function (result) {
-            console.log(result);
-            dialogId =  dataCh.request_id;
-            chatLoaded(dataCh.request_id,dialogId);
-            
-        }, 'json');
+            dataCh.id = 'getchat';
+            dataCh.request_id = result.data[0];
+            $.get('http://buzapchasti.ru/mobile/chat.php', dataCh, function (result) {
+                console.log(result);
+                dialogId = dataCh.request_id;
+                chatLoaded(dataCh.request_id, dialogId);
+                
+            }, 'json');
 //            return true;
         }
-        else{
-             data.id = 'CreateNewDialog';
-               $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
-            console.log(result);
-            dialogId = result.data;
-        }, 'json');
+        else {
+            data.id = 'createNewDialog';
+            $.get('http://buzapchasti.ru/mobile/chat.php', data, function (result) {
+                console.log(result);
+                dialogId = result.data;
+//                dialogId = dataCh.request_id;
+                chatLoaded(data.request_id, dialogId);
+            }, 'json');
 //            return false;
         }
-    },'json');
+    }, 'json');
 }
