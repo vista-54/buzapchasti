@@ -990,7 +990,12 @@ function ShowFullInfo(id) {
 //        if (!checkHostChat()) {
         $("button.startChat").click(function () {
             console.log("chat");
-            chatLoad($("button.startChat").attr('data-request-id'));
+            if (userData.authorization) {
+                chatLoad($("button.startChat").attr('data-request-id'));
+            }
+            else {
+                $('[data-number="6"]').click();
+            }
         });
 //        }
 //        else{

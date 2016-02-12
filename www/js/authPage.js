@@ -19,6 +19,7 @@ function InitAuth() {
                     userData.login = result.data;
                     userData.authorization=true;
                     console.log(userData);
+                    $('[data-number="2"]').click();
                 }
                 else {
                     alert("Неверный логин или пароль");
