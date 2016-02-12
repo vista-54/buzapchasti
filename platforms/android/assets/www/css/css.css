@@ -606,27 +606,42 @@ header{
 
 }
 .msg{
-  display: block;
-    text-align: right;
+    display: block;
+    /*text-align: right;*/
     padding: 15px 12px 15px 0;
     font-size: 25px;
 }
 .msg span{
-    background: rgb(209, 204, 204);
+    background: rgba(0, 181, 225, 0.82);
     padding: 12px 10px 12px 10px;
-    
+    color: rgb(255,255,255);
+
 }
 .sendButton{
-        width: 48px;
+    width: 48px;
     position: absolute;
     padding: 0 0 0 6px;
 }
 #chat input{
-width: 80%;
+    width: 80%;
     font-size: 21px;
     padding: 10px 0 10px 14px;
 }
 #chat label{
-       display: block;
+    display: block;
     margin: 7px 0 10px 6px;
+}
+#OtherPageLoader{
+    position: relative;
+    z-index: 100000;
+}
+.myMsg{
+    display: block;
+    text-align: right;
+    padding: 15px 12px 15px 0;
+    font-size: 25px;
+}
+.myMsg span{
+    background: rgb(209, 204, 204);
+    padding: 12px 10px 12px 10px;
 }

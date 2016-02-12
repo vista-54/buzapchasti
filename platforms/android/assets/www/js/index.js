@@ -37,6 +37,7 @@ function onDeviceReady() {
     console.log('Device is ready');
     screen.lockOrientation('portrait');
     deviceIsReady = true;
+
     document.addEventListener("backbutton", function (e) {
 
         //            navigator.app.backHistory();
@@ -124,6 +125,7 @@ function InitSubMenuButtons() {
     });
     $('[data-number="6"]').click(function () {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+        InitAuth();
         console.log('data-number="6"');
     });
 }
@@ -787,6 +789,7 @@ function confirm(phone, code) {
 }
 $(function () {
     console.log("ready!");
+    initUser();
     generateYears();
     startApp();
 //    $("#body").load('newRequest.html #newRequest', function () {
@@ -922,7 +925,7 @@ function GetAllRequets() {
         console.log("page RequestsList loaded");
 //        InitSubMenuButtons();
     });
-    header.load("RequestsList.html .head");
+    header.load("RequestsList.html .requests");
     var data = {};
     data.id = 'getAllReq';
     $.get("http://buzapchasti.ru/mobile/request.php", data, function (result) {
@@ -983,10 +986,21 @@ function ShowFullInfo(id) {
     var cont = $("#RequestsList");
 //    CheckChat();
     cont.load("fullInfoRequest.html #fullInfoAboutRequest", function () {
-        $("button.next").click(function () {
+        /*=========*/
+//        if (!checkHostChat()) {
+        $("button.startChat").click(function () {
             console.log("chat");
-            chatLoad($("button.next").attr('data-request-id'));
+            if (userData.authorization) {
+                chatLoad($("button.startChat").attr('data-request-id'));
+            }
+            else {
+                $('[data-number="6"]').click();
+            }
         });
+//        }
+//        else{
+//             chatLoad($("button.startChat").attr('data-request-id'));
+//        }
 //        $("#fullInfoAboutRequest").css({'height': $(window).height() - $("header").height() - $("#subMenu").height()});
         $("#RequestsList").css({'height': '100%', 'overflow-y': 'visible'});
         console.log("page fullInfoAboutRequest loaded");
@@ -1029,7 +1043,9 @@ function ShowFullInfo(id) {
             $("[data-modelinfo='services']").append("<li>" + num + "." + t + "</li>");
         }
 
-
+        if (checkHostChat()) {
+            chatLoad($("button.startChat").attr('data-request-id'));
+        }
     });
 }
 function clickBack() {
@@ -1051,7 +1067,7 @@ function CheckChat(request_id, sender, getter) {
                 console.log(result);
                 dialogId = dataCh.request_id;
                 chatLoaded(dataCh.request_id, dialogId);
-                
+
             }, 'json');
 //            return true;
         }

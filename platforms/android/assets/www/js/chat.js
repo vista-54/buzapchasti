@@ -7,8 +7,9 @@
 function chatLoad(reqId) {
     var data = {};
 
-    data.req_id = parseInt($("button.next").attr('data-request-id'));
-    data.sender = 'test';
+    data.req_id = parseInt($("button.startChat").attr('data-request-id'));
+//    data.sender = 'test';
+    data.sender = userData.login;
     data.getter = $("[data-row='phone']").attr('data-value');
     CheckChat(data.req_id, data.sender, data.getter);
 //        
@@ -38,7 +39,7 @@ function loadMessages(dialogId) {
     var chatMess = $('#chat input').val();
     var data = {};
     data.id = 'addMessage';
-    data.user = 'test';
+    data.user = userData.login;
     data.message = chatMess;
     data.dialog_id = dialogId;
     console.log(data);
@@ -51,8 +52,22 @@ function loadMessages(dialogId) {
         console.log(result);
         for (var i in result.data) {
             var obj = result.data[i];
-            chatCnt.append("<h1  class='msg'><span>" + obj.message + "</span></h1>");
+            if (obj.user !== $("[data-row='phone']").attr('data-value')) {
+                chatCnt.append("<h1  class='myMsg'><span>" + obj.message + "</span></h1>");
+            }
+            else{
+                chatCnt.append("<h1  class='msg'><span>" + obj.message + "</span></h1>");
+            }
 //                    chatMess.val('');
         }
     }, 'json');
+}
+/*Фнукция проверки вы ли создатель чата */
+function checkHostChat() {
+    if (userData.login === $("[data-row='phone']").attr('data-value')) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
