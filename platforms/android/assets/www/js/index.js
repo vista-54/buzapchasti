@@ -128,6 +128,11 @@ function InitSubMenuButtons() {
         InitAuth();
         console.log('data-number="6"');
     });
+    $('[data-number="7"]').click(function () {
+        activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
+//        InitAuth();
+        console.log('data-number="7"');
+    });
 }
 function startApp() {
     activeTopMenuButton('1', 'Plus');
@@ -515,12 +520,14 @@ function activeTopMenuButton(num, alt) {
     $('[data-number="4"]').attr('src', 'img/subMenuMessagess.png');
     $('[data-number="5"]').attr('src', 'img/subMenuGarage.png');
     $('[data-number="6"]').attr('src', 'img/subMenuSettings.png');
+    $('[data-number="7"]').attr('src', 'img/subMenuShop.png');
     $('[data-page="1"]').hide();
     $('[data-page="2"]').hide();
     $('[data-page="3"]').hide();
     $('[data-page="4"]').hide();
     $('[data-page="5"]').hide();
     $('[data-page="6"]').hide();
+    $('[data-page="7"]').hide();
     $("[data-page=" + num + "]").show();
     $("[data-number=" + num + "]").attr('src', "img/subMenu" + alt + "Active.png");
 
