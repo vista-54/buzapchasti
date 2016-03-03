@@ -125,7 +125,13 @@ function InitSubMenuButtons() {
     });
     $('[data-number="6"]').click(function () {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
-        InitAuth();
+        if(!userData.authorization){
+             InitAuth();
+        }
+        else{
+            initCompanyFilterList();
+        }
+       
         console.log('data-number="6"');
     });
     $('[data-number="7"]').click(function () {
