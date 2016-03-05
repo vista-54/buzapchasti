@@ -128,9 +128,9 @@ function InitSubMenuButtons() {
         if(!userData.authorization){
              InitAuth();
         }
-        else{
-            initCompanyFilterList();
-        }
+//        else{
+            
+//        }
        
         console.log('data-number="6"');
     });
@@ -138,6 +138,7 @@ function InitSubMenuButtons() {
         activeTopMenuButton($(this).attr('data-number'), $(this).attr('alt'));
 //        InitAuth();
         console.log('data-number="7"');
+        companyListLoad();
     });
 }
 function startApp() {

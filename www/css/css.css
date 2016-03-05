@@ -651,3 +651,9 @@ header{
     padding: 12px 0px 34px 12px;
     border-bottom: 1px solid rgb(207,208,210);
 }
+.filter{
+        margin: -23px 10px 0 0;
+}
+.filter img{
+    width: 25px;
+}
